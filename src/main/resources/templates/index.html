@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th>
+<head>
+<meta charset="ISO-8859-1">
+<title>Location</title>
+
+</head>
+<body>
+  <h1>This is the Eye</h1>
+  
+    <h1 id="notSupported"></h1>
+  <h1 id="lat"></h1>
+    <h1 id="long"></h1>
+    
+    
+    
+    <form name="fetch_loc" th:action="@{/}" th:method="post" th:object="${loc}" >
+    <input step="0.0000001" id="latfield" type='number' th:field="${loc.latitude}">
+     <input step="0.0000001" id="longfield"  type='number' th:field="${loc.longitude}">
+
+    </form>
+    
+  <script type="text/javascript">
+
+  window.addEventListener('click', function(){
+	  document.forms['fetch_loc'].submit();
+  })
+  
+  let getLong = document.getElementById('long');
+  let getLat= document.getElementById('lat');
+  let fieldLong = document.getElementById('longfield');
+  let fieldLat= document.getElementById('latfield');
+  let not= document.getElementById('notSupported');
+
+  function getLocation() {
+	  if (navigator.geolocation) {
+	    navigator.geolocation.getCurrentPosition(showPosition);
+	  } else { 
+	    not.innerHTML = "Geolocation is not supported by this browser.";
+	  }
+	}
+  
+  let latitudeUser = 0;
+  let longitudeUser =0;
+  
+  
+  function showPosition(position){
+	  getLat.innerHTML = position.coords.latitude;
+	  fieldLat.value = position.coords.latitude;
+	  latitudeUser = position.coords.latitude;
+	  getLong.innerHTML = position.coords.longitude;
+	  longitudeUser = position.coords.longitude;
+	  fieldLong.value = position.coords.longitude;
+  }
+  getLocation();
+  console.log(latitudeUser);
+  
+  
+  </script>
+ 
+</body>
+</html>
